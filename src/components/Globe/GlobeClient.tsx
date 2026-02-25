@@ -61,15 +61,37 @@ export default function GlobeClient({ onEngage }: { onEngage?: () => void }) {
         // Premium Google Earth style textures with Night Lights
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         
         // Advanced Realism Props
         showAtmosphere={true}
         atmosphereColor="#93c5fd"
-        atmosphereAltitude={0.15} // More realistic thinner atmosphere
+        atmosphereAltitude={0.15}
         
         onGlobeReady={() => {
           if (!globeRef.current) return;
+
+          const scene = globeRef.current.scene();
+
+          // High-Quality Procedural Starfield
+          const starsGeometry = new THREE.BufferGeometry();
+          const starsCount = 8000;
+          const posArray = new Float32Array(starsCount * 3);
+
+          for (let i = 0; i < starsCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 2000; // Far distance
+          }
+
+          starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+          const starsMaterial = new THREE.PointsMaterial({
+            size: 0.7,
+            color: '#ffffff',
+            transparent: true,
+            opacity: 0.8,
+            sizeAttenuation: true
+          });
+
+          const starsMesh = new THREE.Points(starsGeometry, starsMaterial);
+          scene.add(starsMesh);
 
           // Access the underlying Three.js objects for advanced tuning
           const globeMaterial = globeRef.current.getGlobeMaterial();
@@ -93,15 +115,15 @@ export default function GlobeClient({ onEngage }: { onEngage?: () => void }) {
           );
           globeRef.current.scene().add(cloudMesh);
 
-          // Rotate Clouds
+          // Rotate Clouds and Stars
           const rotateClouds = () => {
-             cloudMesh.rotation.y += 0.0002; // Majestic, slow rotation
+             cloudMesh.rotation.y += 0.0002;
+             starsMesh.rotation.y -= 0.0001; // Slower counter-rotation for space depth
              requestAnimationFrame(rotateClouds);
           };
           rotateClouds();
 
           // Optimize scene lighting for realism
-          const scene = globeRef.current.scene();
           const mainLight = scene.children.find((c: any) => c.type === 'DirectionalLight');
           if (mainLight) {
             mainLight.intensity = 1.5;

@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 // Load ENV since this runs outside Next.js process usually
 config({ path: '.env.local' });
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/pyro_relief';
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/quantum_shift_db';
 
 const CampSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },

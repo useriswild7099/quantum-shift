@@ -65,7 +65,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       <aside className="w-64 bg-neutral-900 border-r border-neutral-800 flex flex-col relative z-20">
         <div className="h-16 flex items-center px-6 border-b border-neutral-800">
           <Heart className="w-6 h-6 text-indigo-500 mr-2" />
-          <h1 className="text-xl font-bold tracking-tight text-white italic">Project Pyro</h1>
+          <h1 className="text-xl font-bold tracking-tight text-white italic">Quantum Shift</h1>
         </div>
         
         <div className="flex-1 py-6 px-3 flex flex-col">

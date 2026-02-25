@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pyro | Disaster Relief Coordination",
+  title: "Quantum Shift | Strategic Disaster Intelligence",
   description: "Prototype disaster relief coordination system",
 };
 
