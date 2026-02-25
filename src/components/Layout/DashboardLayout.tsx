@@ -21,22 +21,22 @@ import { useAppStore } from '@/store/useAppStore';
 
 const publicNavigation = [
   { name: 'Relief Hub', href: '/', icon: Home },
-  { name: 'Donations', href: '/donations', icon: Heart },
-  { name: 'Find Camps', href: '/camps', icon: Tent },
-  { name: 'Survival Protocols', href: '/protocols', icon: BookOpen },
   { name: 'Report Need', href: '/report', icon: MessageSquarePlus },
-  { name: 'Supplies', href: '/resources', icon: Package },
+  { name: 'Find Camps', href: '/camps', icon: Tent },
+  { name: 'Supplies Overview', href: '/resources', icon: Package },
+  { name: 'Survival Protocols', href: '/protocols', icon: BookOpen },
+  { name: 'Donations', href: '/donations', icon: Heart },
 ];
 
 const volunteerNavigation = [
   { name: 'Deploy Dashboard', href: '/volunteers', icon: Users },
-  { name: 'Active Route', href: '/volunteers/route', icon: Package }, // Route to be created
+  { name: 'Active Route', href: '/volunteers/route', icon: Package },
 ];
 
 const authorityNavigation = [
   { name: 'Fleet Command', href: '/government', icon: LayoutDashboard },
-  { name: 'Task Allocation', href: '/government/tasks', icon: Users },
   { name: 'Incident Verification', href: '/government#reports', icon: Megaphone },
+  { name: 'Task Allocation', href: '/government/tasks', icon: Users },
   { name: 'National Inventory', href: '/inventory', icon: Package },
 ];
 
