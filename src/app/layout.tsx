@@ -33,8 +33,12 @@ export default async function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-950 text-neutral-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-950 text-neutral-100 overflow-x-hidden`}
       >
+        {/* Cinematic Desktop Overlays */}
+        <div className="desktop-scanline" />
+        <div className="desktop-grain" />
+
         <StoreProvider initialState={initialState}>
           <SachetTicker />
           {children}

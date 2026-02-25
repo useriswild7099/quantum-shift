@@ -51,21 +51,35 @@ export default function CinematicHome() {
                 >
                   <StrategicGlobe onEngage={() => setViewMode('map')} />
                   
-                  {/* Globe HUD Overlay */}
-                  <div className="absolute top-8 right-8 space-y-4 pointer-events-none">
-                    <HUDIndicator label="SATELLITE SYNC" value="ENCRYPTED" />
-                    <HUDIndicator label="ORBITAL ALT" value="450KM" />
+                  {/* Globe HUD Overlay - Desktop Optimized Expansion */}
+                  <div className="absolute top-8 left-8 space-y-4 pointer-events-none">
+                    <HUDIndicator label="SYSTEM STATUS" value="READY/OPTIMIZED" />
+                    <HUDIndicator label="THERMAL SCAN" value="ACTIVE" />
                   </div>
 
-                  <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center space-x-4">
+                  <div className="absolute top-8 right-8 space-y-4 pointer-events-none">
+                    <HUDIndicator label="SATELLITE SYNC" value="ENCRYPTED" />
+                    <HUDIndicator label="ORBITAL ALT" value="450.52 KM" />
+                    <HUDIndicator label="SIGNAL STRENGTH" value="98.2%" />
+                  </div>
+
+                  <div className="absolute bottom-10 right-10 space-y-4 pointer-events-none hidden xl:block">
+                    <HUDIndicator label="POPULATION RISK" value="MODERATE" />
+                    <HUDIndicator label="WEATHER MATRIX" value="STABLE" />
+                  </div>
+
+                  <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-6">
+                    <div className="px-6 py-2 bg-black/40 backdrop-blur-3xl border border-white/5 rounded-full flex items-center space-x-6">
+                       <MiniStats label="Active Nodes" value="412" trend="+12.2%" />
+                       <MiniStats label="Response Latency" value="18ms" trend="-2ms" color="text-emerald-400" />
+                    </div>
+                    
                     <button 
-                      onClick={() => {
-                          setViewMode('map');
-                      }}
-                      className="px-8 py-3 bg-white text-black font-black text-xs uppercase tracking-[0.2em] rounded-full shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:scale-105 transition-all flex items-center"
+                      onClick={() => setViewMode('map')}
+                      className="px-10 py-4 bg-white text-black font-black text-sm uppercase tracking-[0.3em] rounded-full shadow-[0_0_50px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 transition-all flex items-center group"
                     >
-                      <Maximize2 className="w-4 h-4 mr-2" />
-                      Engage Tactical Map
+                      <Maximize2 className="w-5 h-5 mr-3 group-hover:rotate-90 transition-transform" />
+                      Engage Tactical Command
                     </button>
                   </div>
                 </motion.div>

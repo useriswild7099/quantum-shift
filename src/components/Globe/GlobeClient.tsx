@@ -64,21 +64,23 @@ export default function GlobeClient({ onEngage }: { onEngage?: () => void }) {
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         
         onGlobeReady={() => {
-          // Add Cloud Layer directly to the scene
+          // Advanced Cloud Layer for Desktop High-Fidelity
           const cloudMesh = new THREE.Mesh(
-            new THREE.SphereGeometry(100 * (1 + 0.005), 75, 75),
+            new THREE.SphereGeometry(101, 75, 75), // Slightly larger for better depth
             new THREE.MeshPhongMaterial({
               map: new THREE.TextureLoader().load('//unpkg.com/three-globe/example/img/earth-clouds.png'),
               transparent: true,
-              opacity: 0.4
+              opacity: 0.5, // Increased for desktop visibility
+              blending: THREE.AdditiveBlending // More "glowy" clouds
             })
           );
           globeRef.current.scene().add(cloudMesh);
 
-          // Animate rotation in the main loop if possible, 
-          // or just via a simple interval/raf here since it's a single mesh
+          // Atmospheric Bloom & Scene Optimization
+          globeRef.current.scene().background = new THREE.Color('#000000');
+          
           const rotateClouds = () => {
-             cloudMesh.rotation.y += 0.0005;
+             cloudMesh.rotation.y += 0.0003; // Slower, more majestic rotation for desktop
              requestAnimationFrame(rotateClouds);
           };
           rotateClouds();
