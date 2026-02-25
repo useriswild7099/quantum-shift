@@ -58,45 +58,63 @@ export default function GlobeClient({ onEngage }: { onEngage?: () => void }) {
     <div className="relative w-full h-full cursor-pointer group flex items-center justify-center overflow-hidden bg-black" onDoubleClick={handleGlobeClick}>
       <Globe
         ref={globeRef}
-        // Premium Google Earth style textures
+        // Premium Google Earth style textures with Night Lights
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         
+        // Advanced Realism Props
+        showAtmosphere={true}
+        atmosphereColor="#93c5fd"
+        atmosphereAltitude={0.15} // More realistic thinner atmosphere
+        
         onGlobeReady={() => {
+          if (!globeRef.current) return;
+
+          // Access the underlying Three.js objects for advanced tuning
+          const globeMaterial = globeRef.current.getGlobeMaterial();
+          
+          // Add Specular Map for realistic ocean reflections
+          new THREE.TextureLoader().load('//unpkg.com/three-globe/example/img/earth-waterbodies.png', (texture) => {
+            globeMaterial.specularMap = texture;
+            globeMaterial.specular = new THREE.Color('grey');
+            globeMaterial.shininess = 15;
+          });
+
           // Advanced Cloud Layer for Desktop High-Fidelity
           const cloudMesh = new THREE.Mesh(
-            new THREE.SphereGeometry(101, 75, 75), // Slightly larger for better depth
+            new THREE.SphereGeometry(101, 75, 75),
             new THREE.MeshPhongMaterial({
               map: new THREE.TextureLoader().load('//unpkg.com/three-globe/example/img/earth-clouds.png'),
               transparent: true,
-              opacity: 0.5, // Increased for desktop visibility
-              blending: THREE.AdditiveBlending // More "glowy" clouds
+              opacity: 0.3, // Subtle, more realistic
+              blending: THREE.AdditiveBlending
             })
           );
           globeRef.current.scene().add(cloudMesh);
 
-          // Atmospheric Bloom & Scene Optimization
-          globeRef.current.scene().background = new THREE.Color('#000000');
-          
+          // Rotate Clouds
           const rotateClouds = () => {
-             cloudMesh.rotation.y += 0.0003; // Slower, more majestic rotation for desktop
+             cloudMesh.rotation.y += 0.0002; // Majestic, slow rotation
              requestAnimationFrame(rotateClouds);
           };
           rotateClouds();
+
+          // Optimize scene lighting for realism
+          const scene = globeRef.current.scene();
+          const mainLight = scene.children.find((c: any) => c.type === 'DirectionalLight');
+          if (mainLight) {
+            mainLight.intensity = 1.5;
+            mainLight.position.set(1, 1, 1);
+          }
         }}
 
-        // Pure Cinematic Globe - Data removed as per user request
-        
+        // Pure Cinematic Globe
         ringsData={[{ lat: AEC_COORDS.lat, lng: AEC_COORDS.lng }]}
         ringColor={() => '#6366f1'}
         ringMaxRadius={5}
         ringPropagationSpeed={3}
         ringRepeatPeriod={1000}
-
-        // Atmosphere and visuals
-        atmosphereColor="#93c5fd"
-        atmosphereAltitude={0.25}
         
         onGlobeClick={handleGlobeClick}
       />
